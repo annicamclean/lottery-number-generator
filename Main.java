@@ -1,11 +1,14 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Main {
     /*
     TODO: strip the HTML file to content
+    TODO: get only the numbers and none of the dates and find the frequency
     TODO: Create a class to hold the number frequency
     TODO: Create a class to find what numbers show up the most during a month
     TODO: Create a class to find what numbers show up the most together
@@ -17,6 +20,10 @@ public class Main {
         ArrayList<String> everything = new ArrayList<>();
         ArrayList<String> numbersAndDates = new ArrayList<>();
         ArrayList<Drawing> drawings = new ArrayList<>();
+        ArrayList<Integer> numbersOnly = new ArrayList<>();
+        ArrayList<Integer> numbersOnlyPowerBall = new ArrayList<>();
+        Hashtable<Integer, Integer> numbers = new Hashtable<Integer, Integer>();
+        Hashtable<Integer, Integer> powerBall = new Hashtable<Integer, Integer>();
 
         try {
             Scanner htmlFile = new Scanner(html);
@@ -46,16 +53,22 @@ public class Main {
             Drawing drawing = new Drawing();
             drawing.setDate(numbersAndDates.get(i));
             int number = Integer.parseInt(numbersAndDates.get(i+1));
+            numbersOnly.add(number);
             drawing.setNumberOne(number);
             number = Integer.parseInt(numbersAndDates.get(i+2));
+            numbersOnly.add(number);
             drawing.setNumberTwo(number);
             number = Integer.parseInt(numbersAndDates.get(i+3));
+            numbersOnly.add(number);
             drawing.setNumberThree(number);
             number = Integer.parseInt(numbersAndDates.get(i+4));
+            numbersOnly.add(number);
             drawing.setNumberFour(number);
             number = Integer.parseInt(numbersAndDates.get(i+5));
+            numbersOnly.add(number);
             drawing.setNumberFive(number);
             number = Integer.parseInt(numbersAndDates.get(i+6));
+            numbersOnlyPowerBall.add(number);
             drawing.setPowerball(number);
 
             drawings.add(drawing);
@@ -65,6 +78,36 @@ public class Main {
             System.out.printf("%s: %d, %d, %d, %d, %d, P: %d\n", draw.getDate(), draw.getNumberOne(), draw.getNumberTwo(),
                     draw.getNumberThree(), draw.getNumberFour(), draw.getNumberFive(), draw.getPowerball());
         }
+
+        for (int i = 0; i < numbersOnly.size(); i++) {
+            if (numbers.containsKey(numbersOnly.get(i))) {
+                int newNumber = numbers.get(numbersOnly.get(i));
+                numbers.replace(numbersOnly.get(i), newNumber + 1);
+            } else {
+                numbers.put(numbersOnly.get(i), 1);
+            }
+        }
+
+        TreeMap<Integer, Integer> numberTreeMap = new TreeMap<Integer, Integer>(numbers);
+
+        System.out.println("White Balls");
+        System.out.println(numbers.entrySet());
+        System.out.println(numberTreeMap.entrySet());
+
+
+        for (int i = 0; i < numbersOnlyPowerBall.size(); i++) {
+            if (powerBall.containsKey(numbersOnlyPowerBall.get(i))) {
+                int newNumber = powerBall.get(numbersOnlyPowerBall.get(i));
+                powerBall.replace(numbersOnlyPowerBall.get(i), newNumber + 1);
+            } else {
+                powerBall.put(numbersOnlyPowerBall.get(i), 1);
+            }
+        }
+
+        System.out.println("Powerball");
+        TreeMap<Integer, Integer> powerBallTreeMap = new TreeMap<Integer, Integer>(powerBall);
+        System.out.println(powerBall.entrySet());
+        System.out.println(powerBallTreeMap.entrySet());
 
     }
 
