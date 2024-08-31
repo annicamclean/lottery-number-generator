@@ -139,7 +139,7 @@ public class Main {
             }
         }
 
-        System.out.println("P:" + topPowerBall.getNumber() /*+ " = " + topPowerBall.getFrequency()*/);
+        System.out.println("P/M:" + topPowerBall.getNumber() /*+ " = " + topPowerBall.getFrequency()*/);
 
 
         //an array might be better
@@ -283,7 +283,7 @@ public class Main {
 
         quickSort(months.get(monthNum).getPowerBallNumbers() ,0, months.get(monthNum).getPowerBallNumbers().size() - 1);
 
-        numbers += "P: " + months.get(monthNum).getPowerBallNumbers().get(months.get(monthNum).getPowerBallNumbers().size() - 1).getNumber();
+        numbers += "P/M: " + months.get(monthNum).getPowerBallNumbers().get(months.get(monthNum).getPowerBallNumbers().size() - 1).getNumber();
 
         return numbers;
     }
@@ -362,7 +362,7 @@ public class Main {
         if (str.contains(",")) {
             newString = str.substring(removeTabs(str));
             newString = removeTags(newString);
-        } else if(str.contains("<b>")) {
+        } else if(str.contains("<b>") && !str.contains("btn-success")) {
             newString = str.substring(removeTabs(str));
             newString = removeTags(newString);
         } else {
